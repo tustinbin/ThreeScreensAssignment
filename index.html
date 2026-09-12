@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>One Fact — Edify yourself, one fact at a time</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Figtree:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <!-- SCREEN 1: Landing -->
+      <section id="screen-landing" class="screen screen--active" aria-label="Landing">
+        <header class="brand">
+          <p class="brand__name">One Fact</p>
+        </header>
+
+        <div class="landing">
+          <h1 class="affordance">
+            Use your phone to edify yourself, one fact at a time.
+          </h1>
+          <p class="landing__support">
+            A short, deliberate fact from history and culture—not a feed, not the news cycle.
+          </p>
+
+          <div class="landing__actions">
+            <button type="button" class="btn btn--primary" data-action="learn">
+              Learn something new!
+            </button>
+            <button type="button" class="btn btn--secondary" data-nav="interests">
+              Customize my interests
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN 2: Fact -->
+      <section id="screen-fact" class="screen" aria-label="Fact" hidden>
+        <header class="topbar">
+          <button type="button" class="link-back" data-nav="landing" aria-label="Back to home">
+            ← One Fact
+          </button>
+          <span class="topbar__label" id="fact-topic-label">A fact for you</span>
+        </header>
+
+        <article class="fact" id="fact-card">
+          <p class="fact__status" id="fact-status" hidden></p>
+          <h2 class="fact__title" id="fact-title">Loading a fact…</h2>
+          <p class="fact__body" id="fact-body"></p>
+          <p class="fact__source" id="fact-source"></p>
+        </article>
+
+        <div class="fact__actions">
+          <a
+            class="btn btn--primary"
+            id="fact-read-more"
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Read more!
+          </a>
+          <button type="button" class="btn btn--secondary" data-action="learn">
+            Next fact!
+          </button>
+          <button type="button" class="btn btn--ghost" data-nav="interests">
+            Customize my interests
+          </button>
+        </div>
+      </section>
+
+      <!-- SCREEN 3: Interests -->
+      <section id="screen-interests" class="screen" aria-label="Customize interests" hidden>
+        <header class="topbar">
+          <button type="button" class="link-back" data-nav="landing" aria-label="Back to home">
+            ← One Fact
+          </button>
+        </header>
+
+        <div class="interests">
+          <h2 class="interests__title">Select topics that interest you</h2>
+          <p class="interests__support">
+            We’ll draw your next fact from these areas. Leave them empty to explore anything.
+          </p>
+
+          <div class="topic-grid" id="topic-grid" role="group" aria-label="Topics"></div>
+
+          <div class="interests__actions">
+            <button type="button" class="btn btn--primary" data-action="learn">
+              Learn something new!
+            </button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
