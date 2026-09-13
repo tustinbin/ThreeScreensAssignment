@@ -27,10 +27,12 @@ const els = {
   factStatus: document.getElementById("fact-status"),
   factReadMore: document.getElementById("fact-read-more"),
   factTopicLabel: document.getElementById("fact-topic-label"),
+  navItems: document.querySelectorAll(".nav-item"),
 };
 
 let selectedTopicIds = loadTopics();
 let isLoadingFact = false;
+let hasLoadedFact = false;
 
 function loadTopics() {
   try {
@@ -47,12 +49,25 @@ function saveTopics() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(selectedTopicIds));
 }
 
+function updateNav(activeName) {
+  els.navItems.forEach((item) => {
+    const isActive = item.getAttribute("data-nav") === activeName;
+    item.classList.toggle("is-active", isActive);
+    if (isActive) {
+      item.setAttribute("aria-current", "page");
+    } else {
+      item.removeAttribute("aria-current");
+    }
+  });
+}
+
 function showScreen(name) {
   Object.entries(screens).forEach(([key, el]) => {
     const active = key === name;
     el.classList.toggle("screen--active", active);
     el.hidden = !active;
   });
+  updateNav(name);
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
@@ -103,7 +118,7 @@ function setFactError(message) {
   els.factStatus.textContent = message;
   els.factTitle.textContent = "Couldn’t load a fact right now";
   els.factBody.textContent =
-    "Check your connection and try Next fact again. The goal is still one clear idea—not a pile of headlines.";
+    "Try again in a moment. Still one clear idea—not a pile of headlines.";
   els.factSource.textContent = "";
   els.factReadMore.setAttribute("aria-disabled", "true");
   els.factReadMore.href = "#";
@@ -185,16 +200,17 @@ async function loadFact() {
 
     if (!summary) throw new Error("No usable article");
 
-    const extract = summary.extract.trim();
     els.factStatus.hidden = true;
     els.factTitle.textContent = summary.title;
-    els.factBody.textContent = extract;
-    els.factSource.textContent = "Source: Wikipedia (one excerpt, on purpose)";
+    els.factBody.textContent = summary.extract.trim();
+    els.factSource.textContent = "Source: Wikipedia · one excerpt on purpose";
     els.factReadMore.removeAttribute("aria-disabled");
-    els.factReadMore.href = summary.content_urls?.desktop?.page || summary.content_urls?.mobile?.page || "#";
+    els.factReadMore.href =
+      summary.content_urls?.desktop?.page || summary.content_urls?.mobile?.page || "#";
+    hasLoadedFact = true;
   } catch (err) {
     console.error(err);
-    setFactError("Wikipedia didn’t return a fact. Try again in a moment.");
+    setFactError("Wikipedia didn’t return a fact.");
   } finally {
     setFactLoading(false);
   }
@@ -203,7 +219,22 @@ async function loadFact() {
 document.querySelectorAll("[data-nav]").forEach((el) => {
   el.addEventListener("click", () => {
     const target = el.getAttribute("data-nav");
+
+    // Learn tab: open a fact (fetch if first visit)
+    if (el.hasAttribute("data-action-nav") && target === "fact") {
+      if (!hasLoadedFact) {
+        loadFact();
+      } else {
+        showScreen("fact");
+      }
+      return;
+    }
+
     if (target === "landing" || target === "interests" || target === "fact") {
+      if (target === "fact" && !hasLoadedFact) {
+        loadFact();
+        return;
+      }
       showScreen(target);
     }
   });
