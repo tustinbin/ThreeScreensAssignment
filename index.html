@@ -7,96 +7,101 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Figtree:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Figtree:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <div class="app-shell">
-      <!-- SCREEN 1: Landing -->
-      <section id="screen-landing" class="screen screen--active" aria-label="Landing">
-        <header class="brand">
-          <p class="brand__name">One Fact</p>
-        </header>
+      <main class="app-main">
+        <!-- SCREEN 1: Landing -->
+        <section id="screen-landing" class="screen screen--active" aria-label="Landing">
+          <p class="brand">One Fact</p>
 
-        <div class="landing">
-          <h1 class="affordance">
-            Use your phone to edify yourself, one fact at a time.
-          </h1>
-          <p class="landing__support">
-            A short, deliberate fact from history and culture—not a feed, not the news cycle.
-          </p>
+          <div class="landing">
+            <!-- Message group: value + capability (proximity) -->
+            <div class="landing__copy">
+              <h1 class="affordance">
+                Edify yourself, one fact at a time.
+              </h1>
+              <p class="landing__support">
+                One deliberate fact from history and culture—not a feed, not the news.
+              </p>
+            </div>
 
-          <div class="landing__actions">
-            <button type="button" class="btn btn--primary" data-action="learn">
-              Learn something new!
-            </button>
-            <button type="button" class="btn btn--secondary" data-nav="interests">
-              Customize my interests
+            <!-- Primary action alone so nothing competes with it -->
+            <div class="landing__actions">
+              <button type="button" class="btn btn--primary" data-action="learn">
+                Learn something new
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- SCREEN 2: Fact -->
+        <section id="screen-fact" class="screen" aria-label="Fact" hidden>
+          <p class="screen-kicker" id="fact-topic-label">A fact for you</p>
+
+          <!-- Content group: title + excerpt + source stay together -->
+          <article class="fact" id="fact-card">
+            <p class="fact__status" id="fact-status" hidden></p>
+            <h2 class="fact__title" id="fact-title">Loading a fact…</h2>
+            <p class="fact__body" id="fact-body"></p>
+            <p class="fact__source" id="fact-source"></p>
+          </article>
+
+          <!-- Action group: only what you do with this fact -->
+          <div class="fact__actions" role="group" aria-label="Fact actions">
+            <a
+              class="btn btn--primary"
+              id="fact-read-more"
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Read more
+            </a>
+            <button type="button" class="btn btn--secondary" data-action="learn">
+              Next fact
             </button>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <!-- SCREEN 2: Fact -->
-      <section id="screen-fact" class="screen" aria-label="Fact" hidden>
-        <header class="topbar">
-          <button type="button" class="link-back" data-nav="landing" aria-label="Back to home">
-            ← One Fact
-          </button>
-          <span class="topbar__label" id="fact-topic-label">A fact for you</span>
-        </header>
+        <!-- SCREEN 3: Interests -->
+        <section id="screen-interests" class="screen" aria-label="Customize interests" hidden>
+          <!-- Copy group -->
+          <div class="interests__copy">
+            <h2 class="interests__title">Select topics that interest you</h2>
+            <p class="interests__support">
+              Your next fact comes from these. Leave empty to explore anything.
+            </p>
+          </div>
 
-        <article class="fact" id="fact-card">
-          <p class="fact__status" id="fact-status" hidden></p>
-          <h2 class="fact__title" id="fact-title">Loading a fact…</h2>
-          <p class="fact__body" id="fact-body"></p>
-          <p class="fact__source" id="fact-source"></p>
-        </article>
-
-        <div class="fact__actions">
-          <a
-            class="btn btn--primary"
-            id="fact-read-more"
-            href="#"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read more!
-          </a>
-          <button type="button" class="btn btn--secondary" data-action="learn">
-            Next fact!
-          </button>
-          <button type="button" class="btn btn--ghost" data-nav="interests">
-            Customize my interests
-          </button>
-        </div>
-      </section>
-
-      <!-- SCREEN 3: Interests -->
-      <section id="screen-interests" class="screen" aria-label="Customize interests" hidden>
-        <header class="topbar">
-          <button type="button" class="link-back" data-nav="landing" aria-label="Back to home">
-            ← One Fact
-          </button>
-        </header>
-
-        <div class="interests">
-          <h2 class="interests__title">Select topics that interest you</h2>
-          <p class="interests__support">
-            We’ll draw your next fact from these areas. Leave them empty to explore anything.
-          </p>
-
+          <!-- Topic group: all choices share one region -->
           <div class="topic-grid" id="topic-grid" role="group" aria-label="Topics"></div>
 
+          <!-- Outcome action sits with the topics it uses -->
           <div class="interests__actions">
             <button type="button" class="btn btn--primary" data-action="learn">
-              Learn something new!
+              Learn something new
             </button>
           </div>
-        </div>
-      </section>
+        </section>
+      </main>
+
+      <!-- Navigation group: all screen-changing controls share one bar (common region + proximity) -->
+      <nav class="bottom-nav" aria-label="Main">
+        <button type="button" class="nav-item is-active" data-nav="landing" aria-current="page">
+          <span class="nav-item__label">Home</span>
+        </button>
+        <button type="button" class="nav-item" data-nav="fact" data-action-nav="learn">
+          <span class="nav-item__label">Learn</span>
+        </button>
+        <button type="button" class="nav-item" data-nav="interests">
+          <span class="nav-item__label">Interests</span>
+        </button>
+      </nav>
     </div>
 
     <script src="app.js"></script>
