@@ -9,6 +9,7 @@
   --accent-soft: #e8efe9;
   --danger: #8a3b2b;
   --nav-h: 4rem;
+  --media-h: 200px;
   --radius: 12px;
   --font-display: "Fraunces", Georgia, serif;
   --font-body: "Figtree", "Segoe UI", sans-serif;
@@ -45,8 +46,7 @@ a.btn {
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  background:
-    linear-gradient(180deg, #f8f9f7 0%, var(--paper) 40%);
+  background: linear-gradient(180deg, #f8f9f7 0%, var(--paper) 40%);
 }
 
 .app-main {
@@ -99,7 +99,6 @@ a.btn {
   padding-bottom: 1rem;
 }
 
-/* Proximity: headline + support read as one message block */
 .landing__copy {
   display: flex;
   flex-direction: column;
@@ -167,25 +166,98 @@ a.btn {
   color: var(--ink);
 }
 
+.btn--ghost {
+  background: transparent;
+  border-color: var(--line);
+  color: var(--ink-soft);
+  font-weight: 500;
+  min-height: 2.5rem;
+}
+
+.btn--ghost:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.btn--compact {
+  min-height: 2.45rem;
+  padding: 0.45rem 0.7rem;
+  font-size: 0.9rem;
+}
+
+.btn__icon {
+  width: 1.15rem;
+  height: 1.15rem;
+  display: block;
+}
+
+.btn--compact .icon-bookmark-filled {
+  display: none;
+}
+
+.btn--compact.is-saved {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.btn--compact.is-saved .icon-bookmark-outline {
+  display: none;
+}
+
+.btn--compact.is-saved .icon-bookmark-filled {
+  display: block;
+}
+
 .btn:disabled,
 .btn[aria-disabled="true"] {
   opacity: 0.5;
   pointer-events: none;
 }
 
-/* Common region: fact content stays visually one unit */
 .fact {
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 1.25rem 1.15rem;
   flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .fact__status {
   margin: 0 0 0.75rem;
   color: var(--danger);
   font-size: 0.95rem;
+}
+
+/* Consistent height; scale image to fit without cropping faces/details */
+.fact__media {
+  position: relative;
+  flex: 0 0 auto;
+  height: var(--media-h);
+  margin: 0 0 1rem;
+  border-radius: calc(var(--radius) - 4px);
+  overflow: hidden;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fact__media[hidden] {
+  display: none !important;
+}
+
+.fact__image {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
 }
 
 .fact__title {
@@ -196,11 +268,22 @@ a.btn {
   line-height: 1.25;
 }
 
-.fact__body {
+.fact__summary {
   margin: 0;
-  color: var(--ink-soft);
-  font-size: 1.02rem;
+  color: var(--ink);
+  font-size: 1.05rem;
   line-height: 1.65;
+  font-weight: 500;
+}
+
+.fact__highlight {
+  margin: 0.9rem 0 0;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.98rem;
+  line-height: 1.6;
+  font-weight: 400;
 }
 
 .fact__source {
@@ -211,9 +294,125 @@ a.btn {
   font-size: 0.82rem;
 }
 
-/* Proximity: Read more + Next fact sit together under the fact */
 .fact__actions {
-  margin-top: 0.15rem;
+  margin-top: 0;
+}
+
+.fact__next {
+  width: 100%;
+}
+
+.fact__secondary {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  gap: 0.55rem;
+  align-items: stretch;
+}
+
+.fact__secondary .btn--compact:not(.btn--label) {
+  width: 2.65rem;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.saved__header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.saved__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.45rem, 4.5vw, 1.85rem);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.saved__support {
+  margin: 0;
+  color: var(--muted);
+}
+
+.saved-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 0.5rem;
+}
+
+.saved-empty {
+  margin: 2rem 0 0;
+  color: var(--muted);
+  text-align: center;
+}
+
+.saved-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.saved-card__media {
+  height: 140px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.saved-card__media img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+}
+
+.saved-card__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.saved-card__summary {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.saved-card__highlight {
+  margin: 0;
+  color: var(--ink);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.saved-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.saved-card__actions .btn {
+  flex: 1 1 30%;
+  min-height: 2.4rem;
+  font-size: 0.9rem;
 }
 
 .interests__copy {
@@ -236,7 +435,6 @@ a.btn {
   max-width: 36ch;
 }
 
-/* Similarity + proximity: topic chips as one choice set */
 .topic-grid {
   display: flex;
   flex-wrap: wrap;
@@ -275,7 +473,6 @@ a.btn {
   margin-top: auto;
 }
 
-/* Common region: screen navigation only lives here */
 .bottom-nav {
   position: fixed;
   left: 50%;
@@ -325,12 +522,28 @@ a.btn {
   background: var(--accent-soft);
 }
 
-@media (min-width: 560px) {
-  .fact__actions {
-    flex-direction: row;
-  }
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(var(--nav-h) + 1rem);
+  transform: translateX(-50%);
+  background: var(--ink);
+  color: #f7faf8;
+  padding: 0.55rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  z-index: 40;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 180ms ease;
+}
 
-  .fact__actions .btn {
-    flex: 1;
+.toast.is-visible {
+  opacity: 1;
+}
+
+@media (min-width: 560px) {
+  .fact__secondary {
+    grid-template-columns: auto auto 1fr;
   }
 }

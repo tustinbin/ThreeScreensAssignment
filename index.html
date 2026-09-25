@@ -15,12 +15,11 @@
   <body>
     <div class="app-shell">
       <main class="app-main">
-        <!-- SCREEN 1: Landing -->
+        <!-- Landing: first load only -->
         <section id="screen-landing" class="screen screen--active" aria-label="Landing">
           <p class="brand">One Fact</p>
 
           <div class="landing">
-            <!-- Message group: value + capability (proximity) -->
             <div class="landing__copy">
               <h1 class="affordance">
                 Edify yourself, one fact at a time.
@@ -30,7 +29,6 @@
               </p>
             </div>
 
-            <!-- Primary action alone so nothing competes with it -->
             <div class="landing__actions">
               <button type="button" class="btn btn--primary" data-action="learn">
                 Learn something new
@@ -39,49 +37,93 @@
           </div>
         </section>
 
-        <!-- SCREEN 2: Fact -->
+        <!-- Learn / Fact -->
         <section id="screen-fact" class="screen" aria-label="Fact" hidden>
           <p class="screen-kicker" id="fact-topic-label">A fact for you</p>
 
-          <!-- Content group: title + excerpt + source stay together -->
           <article class="fact" id="fact-card">
             <p class="fact__status" id="fact-status" hidden></p>
+
+            <div class="fact__media" id="fact-media" hidden aria-hidden="true">
+              <img id="fact-image" class="fact__image" alt="" hidden />
+            </div>
+
             <h2 class="fact__title" id="fact-title">Loading a fact…</h2>
-            <p class="fact__body" id="fact-body"></p>
+            <!-- Summary first (context), then optional highlight statement -->
+            <p class="fact__summary" id="fact-summary"></p>
+            <p class="fact__highlight" id="fact-highlight" hidden></p>
             <p class="fact__source" id="fact-source"></p>
           </article>
 
-          <!-- Action group: only what you do with this fact -->
           <div class="fact__actions" role="group" aria-label="Fact actions">
-            <a
-              class="btn btn--primary"
-              id="fact-read-more"
-              href="#"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Read more
-            </a>
-            <button type="button" class="btn btn--secondary" data-action="learn">
+            <button type="button" class="btn btn--primary fact__next" data-action="learn">
               Next fact
             </button>
+            <div class="fact__secondary" role="group" aria-label="Save, share, and read more">
+              <button type="button" class="btn btn--secondary btn--compact" id="fact-save" aria-label="Save">
+                <svg class="btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path
+                    class="icon-bookmark-outline"
+                    d="M6 4h12a1 1 0 0 1 1 1v16l-7-4-7 4V5a1 1 0 0 1 1-1z"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    class="icon-bookmark-filled"
+                    d="M6 4h12a1 1 0 0 1 1 1v16l-7-4-7 4V5a1 1 0 0 1 1-1z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </button>
+              <button type="button" class="btn btn--secondary btn--compact" id="fact-share" aria-label="Share">
+                <svg class="btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <circle cx="18" cy="5" r="2.4" fill="currentColor" />
+                  <circle cx="6" cy="12" r="2.4" fill="currentColor" />
+                  <circle cx="18" cy="19" r="2.4" fill="currentColor" />
+                  <path
+                    d="M8.2 13.1 15.8 17.4M15.8 6.6 8.2 10.9"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                  />
+                </svg>
+              </button>
+              <a
+                class="btn btn--secondary btn--compact btn--label"
+                id="fact-read-more"
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Read more
+              </a>
+            </div>
           </div>
         </section>
 
-        <!-- SCREEN 3: Interests -->
+        <!-- Saved facts -->
+        <section id="screen-saved" class="screen" aria-label="Saved facts" hidden>
+          <div class="saved__header">
+            <h2 class="saved__title">Saved facts</h2>
+            <p class="saved__support" id="saved-support">Facts you keep for later.</p>
+          </div>
+          <div class="saved-list" id="saved-list"></div>
+        </section>
+
+        <!-- Interests -->
         <section id="screen-interests" class="screen" aria-label="Customize interests" hidden>
-          <!-- Copy group -->
           <div class="interests__copy">
             <h2 class="interests__title">Select topics that interest you</h2>
             <p class="interests__support">
-              Your next fact comes from these. Leave empty to explore anything.
+              We’ll prefer facts that lean toward these topics. Leave empty to explore anything.
             </p>
           </div>
 
-          <!-- Topic group: all choices share one region -->
           <div class="topic-grid" id="topic-grid" role="group" aria-label="Topics"></div>
 
-          <!-- Outcome action sits with the topics it uses -->
           <div class="interests__actions">
             <button type="button" class="btn btn--primary" data-action="learn">
               Learn something new
@@ -90,10 +132,9 @@
         </section>
       </main>
 
-      <!-- Navigation group: all screen-changing controls share one bar (common region + proximity) -->
       <nav class="bottom-nav" aria-label="Main">
-        <button type="button" class="nav-item is-active" data-nav="landing" aria-current="page">
-          <span class="nav-item__label">Home</span>
+        <button type="button" class="nav-item" data-nav="saved">
+          <span class="nav-item__label">Saved</span>
         </button>
         <button type="button" class="nav-item" data-nav="fact" data-action-nav="learn">
           <span class="nav-item__label">Learn</span>
@@ -104,6 +145,6 @@
       </nav>
     </div>
 
-    <script src="app.js"></script>
+    <script src="app.js?v=fact6"></script>
   </body>
 </html>
