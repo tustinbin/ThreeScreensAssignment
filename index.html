@@ -39,7 +39,17 @@
 
         <!-- Learn / Fact -->
         <section id="screen-fact" class="screen" aria-label="Fact" hidden>
-          <p class="screen-kicker" id="fact-topic-label">A fact for you</p>
+          <div class="fact__header">
+            <p class="screen-kicker" id="fact-topic-label">A fact for you</p>
+            <div class="mode-toggle" role="group" aria-label="Fact mode">
+              <button type="button" class="mode-toggle__btn is-active" data-mode="random" id="mode-random">
+                Random
+              </button>
+              <button type="button" class="mode-toggle__btn" data-mode="interests" id="mode-interests">
+                Interests
+              </button>
+            </div>
+          </div>
 
           <article class="fact" id="fact-card">
             <p class="fact__status" id="fact-status" hidden></p>
@@ -49,7 +59,6 @@
             </div>
 
             <h2 class="fact__title" id="fact-title">Loading a fact…</h2>
-            <!-- Summary first (context), then optional highlight statement -->
             <p class="fact__summary" id="fact-summary"></p>
             <p class="fact__highlight" id="fact-highlight" hidden></p>
             <p class="fact__source" id="fact-source"></p>
@@ -59,7 +68,7 @@
             <button type="button" class="btn btn--primary fact__next" data-action="learn">
               Next fact
             </button>
-            <div class="fact__secondary" role="group" aria-label="Save, share, and read more">
+            <div class="fact__secondary" role="group" aria-label="Save, like, share, and read more">
               <button type="button" class="btn btn--secondary btn--compact" id="fact-save" aria-label="Save">
                 <svg class="btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                   <path
@@ -73,6 +82,23 @@
                   <path
                     class="icon-bookmark-filled"
                     d="M6 4h12a1 1 0 0 1 1 1v16l-7-4-7 4V5a1 1 0 0 1 1-1z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </button>
+              <button type="button" class="btn btn--secondary btn--compact" id="fact-like" aria-label="Add to interests">
+                <svg class="btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path
+                    class="icon-heart-outline"
+                    d="M12 20s-7-4.4-7-9.2A3.8 3.8 0 0 1 12 7.5a3.8 3.8 0 0 1 7 3.3C19 15.6 12 20 12 20z"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    class="icon-heart-filled"
+                    d="M12 20s-7-4.4-7-9.2A3.8 3.8 0 0 1 12 7.5a3.8 3.8 0 0 1 7 3.3C19 15.6 12 20 12 20z"
                     fill="currentColor"
                   />
                 </svg>
@@ -116,13 +142,34 @@
         <!-- Interests -->
         <section id="screen-interests" class="screen" aria-label="Customize interests" hidden>
           <div class="interests__copy">
-            <h2 class="interests__title">Select topics that interest you</h2>
-            <p class="interests__support">
-              We’ll prefer facts that lean toward these topics. Leave empty to explore anything.
+            <div class="interests__title-row">
+              <h2 class="interests__title" id="interests-title">Your interests</h2>
+              <button type="button" class="link-text" id="clear-all-niches" hidden>
+                Clear all
+              </button>
+            </div>
+            <p class="interests__support" id="interests-support">
+              Select niches to use Interests mode. Heart a fact to add new ones here.
             </p>
           </div>
 
-          <div class="topic-grid" id="topic-grid" role="group" aria-label="Topics"></div>
+          <div class="interests__section" id="selected-section" hidden>
+            <h3 class="interests__section-title">Currently selected</h3>
+            <div class="topic-grid topic-grid--selected" id="selected-grid" role="group" aria-label="Currently selected niches"></div>
+          </div>
+
+          <div class="interests__section" id="additions-section">
+            <h3 class="interests__section-title">Your additions</h3>
+            <p class="interests__section-empty" id="additions-empty">
+              Heart a fact on Learn to capture topics from it.
+            </p>
+            <div class="topic-grid" id="additions-grid" role="group" aria-label="Your additions"></div>
+          </div>
+
+          <div class="interests__section" id="defaults-section">
+            <h3 class="interests__section-title" id="defaults-section-title">Browse niches</h3>
+            <div class="niche-groups" id="niche-groups" role="group" aria-label="Default niches"></div>
+          </div>
 
           <div class="interests__actions">
             <button type="button" class="btn btn--primary" data-action="learn">
@@ -145,6 +192,6 @@
       </nav>
     </div>
 
-    <script src="app.js?v=fact6"></script>
+    <script type="module" src="src/main.js"></script>
   </body>
 </html>
